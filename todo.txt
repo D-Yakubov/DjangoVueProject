@@ -1,0 +1,46 @@
+- done Install virtual environment 
+- done Install Django 
+- done Install django-restframework
+- done Install django-cors-headers
+- done Install djoser
+- done Create Django project
+- done Configure the project
+- done Add Djoser to the urls
+- done Initialize database
+-done Install Vue and some libraries
+-done Set up the libraries
+-done Run the servers and test
+------------------------------------
+Clean up the App.vue and Home.vue
+Add menu, content and footer
+Create the front page
+Create an about page (add to menu)
+Create a sign up page
+Create a login in page
+Convert the menu to a component
+Convert the footer to a component
+------------------------------------
+Finish sign up page and functionality
+Set up vuex store
+Initialize vuex on start up 
+Finish log in page and functionality
+Create very basic my account page
+Make it possible to log out
+
+4 video -- 3:55
+--------------------------------------
+Create the courses page
+Set up app and databasemodel for categories and courses
+Get courses from the database
+---------------------------------------------
+Create new page for course detail
+Restrict access to the course
+Hide login/signup bottons in menu when authenticated
+Add link to my account in the menu
+Delete token in the backend when log out
+-------------------------------------------------------
+Create database model for lessons
+Show lessons in a course
+Show detail page of a lesson
+-------------------------------------------------------
+part-7
