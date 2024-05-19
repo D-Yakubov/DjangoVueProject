@@ -44,3 +44,16 @@ Show lessons in a course
 Show detail page of a lesson
 -------------------------------------------------------
 part-7
+Create database model for lesson comments
+Create from for comments
+Show comments
+-------------------------------------------------------
+Add validation to the comments form
+Add the comment to the list of comments
+Convert the course list object to a component
+Show newest courses on the front page
+Add thumbails to courses
+
+CTRL+SHIFT+I
+
+part9
