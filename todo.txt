@@ -55,5 +55,37 @@ Show newest courses on the front page
 Add thumbails to courses
 
 CTRL+SHIFT+I
-
+-------------------------------------------------------
 part9
+Make it possible to filter on categories
+-------------------------------------------------------
+part 10 (21.05.2024)
+Work with the admin section
+    Fix plural name for categories
+    Show more information for lessons
+    Show comments
+    Inline comments
+Set the window title
+Update "Get started" button on the front page
+Lessons not listed on front page when signed out
+Categories not listed when signed out
+Courses not listen when signed out
+Course contents not showing when signed out
+Prevent loading data from course(when not signed in)
+---------------------------------------------------------
+part 11
+Create database model for quizzes
+Register Quiz in admin and add quiz
+Make a new serializer
+Make a new view
+When opening a quiz, load questions
+Make it possible to answer a quiz
+Disable comments for quizzes
+
+https://github.com/SteinOveHelset/studynet_vue/blob/part-11/src/store/index.js
+https://www.youtube.com/watch?v=m3KvOxdMqOA&list=PLpyspNLjzwBk3oofmtqs0KMD3DY9BjNwp&index=14
+7:57
+https://youtu.be/m3KvOxdMqOA?si=ZmEy9AdJ0NJiE1Ky&t=477
+
+13:52
+https://www.youtube.com/watch?v=XGfZlr_eie8&list=PLpyspNLjzwBk3oofmtqs0KMD3DY9BjNwp&index=13

@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*']
 WEBSITE_URL = 'http://127.0.0.1:8000' #added
 
 REST_FRAMEWORK = {
+    'DATETIME_FORMAT': '%d.%m.%Y %H:%M',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'corsheaders', #Added by me
     'djoser', #Added by me
     'course', #added
+    'activity'
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -145,3 +147,5 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/') # 'media' is my media folder
 MEDIA_URL = '/media/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
