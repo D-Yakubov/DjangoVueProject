@@ -1,50 +1,63 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
-import SignUpView from '../views/SignUpView.vue'
-import LoginInView from '../views/LoginInView.vue'
+import Home from '../views/Home.vue'
+import About from '../views/About.vue'
+import SignUp from '../views/SignUp.vue'
+import LogIn from '../views/LogIn.vue'
 
-import CoursesView from '../views/CoursesView.vue'
-import CourseView from '../views/CourseView.vue'
+import Courses from '../views/Courses.vue'
+import Course from '../views/Course.vue'
+import Author from '../views/Author.vue'
 
-import MyAccountView from '../views/dashboard/MyAccountView.vue'
+import MyAccount from '../views/dashboard/MyAccount.vue'
+//import CreateCourse from '../views/dashboard/CreateCourse.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView
+    component: Home
   },
   {
     path: '/about',
     name: 'About',
-    component: AboutView
+    component: About
   },
   {
     path: '/sign-up',
     name: 'SignUp',
-    component: SignUpView
+    component: SignUp
   },
   {
     path: '/log-in',
     name: 'LogIn',
-    component: LoginInView
+    component: LogIn
   },
   {
     path: '/courses',
     name: 'Courses',
-    component: CoursesView
+    component: Courses
   },
   {
     path: '/courses/:slug',
     name: 'Course',
-    component: CourseView
+    component: Course
   },
+  {
+    path: '/authors/:id',
+    name: 'Author',
+    component: Author
+  },
+
   {
     path: '/dashboard/my-account',
     name: 'MyAccount',
-    component: MyAccountView
-  }
+    component: MyAccount
+  },
+  // {
+  //   path: '/dashboard/create-course',
+  //   name: 'CreateCourse',
+  //   component: CreateCourse
+  // }
 ]
 
 const router = createRouter({

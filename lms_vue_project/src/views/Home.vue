@@ -13,9 +13,7 @@
         <div class="columns is-multiline">
           <div class="column is-4">
             <div class="box has-text-centered">
-              <span class="icon is-size-2 has-text-info"
-                ><i class="far fa-clock"></i
-              ></span>
+              <span class="icon is-size-2 has-text-info"><i class="far fa-clock"></i></span>
 
               <h2 class="is-size-4 mt-4 mb-4">Study at your own pace</h2>
 
@@ -25,9 +23,7 @@
 
           <div class="column is-4">
             <div class="box has-text-centered">
-              <span class="icon is-size-2 has-text-info"
-                ><i class="far fa-comments"></i
-              ></span>
+              <span class="icon is-size-2 has-text-info"><i class="far fa-comments"></i></span>
 
               <h2 class="is-size-4 mt-4 mb-4">Study with others</h2>
 
@@ -37,9 +33,7 @@
 
           <div class="column is-4">
             <div class="box has-text-centered">
-              <span class="icon is-size-2 has-text-info"
-                ><i class="fas fa-home"></i
-              ></span>
+              <span class="icon is-size-2 has-text-info"><i class="fas fa-home"></i></span>
 
               <h2 class="is-size-4 mt-4 mb-4">Study from your home</h2>
 
@@ -48,19 +42,17 @@
           </div>
 
           <div class="column is-12 has-text-centered">
-            <a href="/sign-up" class="button is-info is-size-3 mt-6 mb-6"
-              >Click to get started</a
-            >
+            <a href="/sign-up" class="button is-info is-size-3 mt-6 mb-6">Click to get started</a>
           </div>
 
-          <hr />
+          <hr>
 
-          <div
-            class="column is-3"
-            v-for="course in courses"
-            v-bind:key="course.id"
+          <div 
+              class="column is-3"
+              v-for="course in courses"
+              v-bind:key="course.id"
           >
-            <CourseItem :course="course" />
+              <CourseItem :course="course" />
           </div>
         </div>
       </div>
@@ -69,30 +61,32 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
-import CourseItem from "@/components/CourseItem.vue";
+import CourseItem from '@/components/CourseItem.vue'
 
 export default {
-  name: "Home",
+  name: 'Home',
   data() {
-    return {
-      courses: [],
-    };
+      return {
+          courses: []
+      }
   },
   components: {
-    CourseItem,
+      CourseItem
   },
   mounted() {
-    console.log("mounted");
+      console.log('mounted')
 
-    document.title = "Welcome | StudyNet";
+      document.title = 'Welcome | StudyNet'
 
-    axios.get("/api/v1/courses/get_frontpage_courses/").then((response) => {
-      console.log(response.data);
+      axios
+          .get('courses/get_frontpage_courses/')
+          .then(response => {
+              console.log(response.data)
 
-      this.courses = response.data;
-    });
-  },
-};
+              this.courses = response.data
+          })
+  }
+}
 </script>
