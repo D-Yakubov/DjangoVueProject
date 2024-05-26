@@ -19,8 +19,8 @@
 
                     <div class="column is-12">
                         <nav class="pagination">
-                            <a class="pagination-previous">Previous</a>
-                            <a class="pagination-next">Next</a>
+                            <a class="pagination-previous">Orqaga</a>
+                            <a class="pagination-next">Oldinga</a>
                         </nav>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-image">
             <figure class="image is-4by3">
-                <img :src="course.get_image" alt="Placeholder image">
+                <img :src="course.get_image" alt="Rasm o'rni'">
             </figure>
         </div>
 
@@ -16,7 +16,7 @@
             <div class="content">
                 <p>{{ course.short_description }}</p>
 
-                <router-link :to="{name: 'Course', params: {slug: course.slug}}">More</router-link>
+                <router-link :to="{name: 'Course', params: {slug: course.slug}}">Ko'proq</router-link>
             </div>
         </div>
     </div>

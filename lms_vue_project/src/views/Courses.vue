@@ -2,7 +2,7 @@
   <div class="courses">
       <div class="hero is-info">
           <div class="hero-body has-text-centered">
-              <h1 class="title">Courses</h1>
+              <h1 class="title">Kurslar</h1>
           </div>
       </div>
 
@@ -11,7 +11,7 @@
               <div class="columns">
                   <div class="column is-2">
                       <aside class="menu">
-                          <p class="menu-label">Categories</p>
+                          <p class="menu-label">Kategoriya</p>
 
                           <ul class="menu-list">
                               <li>
@@ -19,7 +19,7 @@
                                       v-bind:class="{'is-active': !activeCategory}"
                                       @click="setActiveCategory(null)"
                                   >
-                                      All courses
+                                      Barcha kurslar
                                   </a>
                               </li>
                               <li
@@ -45,8 +45,8 @@
 
                           <div class="column is-12">
                               <nav class="pagination">
-                                  <a class="pagination-previous">Previous</a>
-                                  <a class="pagination-next">Next</a>
+                                  <a class="pagination-previous">Avvalgi</a>
+                                  <a class="pagination-next">Keyingi</a>
                               </nav>
                           </div>
                       </div>
@@ -76,7 +76,7 @@ export default {
   async mounted() {
       console.log('mounted')
 
-      document.title = 'Courses | StudyNet'
+      document.title = 'Kurslar | theMWE.tech'
 
       await axios
           .get('courses/get_categories/')

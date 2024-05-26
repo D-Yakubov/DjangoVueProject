@@ -2,8 +2,8 @@
     <div class="video-container">
         <iframe 
             :src="'https://www.youtube.com/embed/' + youtube_id"
-            width="100%" 
-            height="400" 
+            width="1100" 
+            height="600" 
             frameborder="0" 
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;" 
             allowfullscreen

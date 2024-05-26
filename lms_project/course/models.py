@@ -45,7 +45,7 @@ class Course(models.Model):
         if self.image:
             return settings.WEBSITE_URL + self.image.url
         else:
-            return 'http://bulma.io/images/placeholders/1280x960.png'
+            return 'http://bulma.io/assets/images/placeholders/1280x960.png'
 
 class Lesson(models.Model):
     DRAFT = 'draft'

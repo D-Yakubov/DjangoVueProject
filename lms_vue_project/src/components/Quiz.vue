@@ -21,15 +21,15 @@
         </div>
 
         <div class="control mt-4">
-            <button class="button is-info" @click="submitQuiz">Submit</button>
+            <button class="button is-info" @click="submitQuiz">Jo'natish</button>
         </div>
 
         <template v-if="quizResult == 'correct'">
-            <div class="notification is-success mt-4">Correct :-D</div>
+            <div class="notification is-success mt-4">To'g'ri</div>
         </template>
 
         <template v-if="quizResult == 'incorrect'">
-            <div class="notification is-danger mt-4">Wrong :-( Please try again!</div>
+            <div class="notification is-danger mt-4">Xato ( Iltimos qayta urinib ko'ring!</div>
         </template>
     </div>
 </template>
@@ -49,12 +49,12 @@ export default {
 
             if (this.selectedAnswer) {
                 if (this.selectedAnswer === this.quiz.answer) {
-                    this.quizResult = 'correct'
+                    this.quizResult = "correct"
                 } else {
-                    this.quizResult = 'incorrect'
+                    this.quizResult = "incorrect"
                 }
             } else {
-                alert('Select answer first')
+                alert('Birinchi javobni tanlang')
             }
         },
     }

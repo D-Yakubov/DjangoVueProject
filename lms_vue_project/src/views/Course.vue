@@ -17,7 +17,7 @@
           <div class="container">
               <div class="columns content">
                   <div class="column is-2">
-                      <h2>Table of contents</h2>
+                      <h2>Darslar ro'yxati</h2>
 
                       <ul>
                           <li
@@ -34,8 +34,8 @@
                           <template v-if="activeLesson">
                               <h2>{{ activeLesson.title }}</h2>
 
-                              <span class="tag is-warning" v-if="activity.status == 'started'" @click="markAsDone">Started (mark as done)</span>
-                              <span class="tag is-success" v-else>Done</span>
+                              <span class="tag is-warning" v-if="activity.status == 'started'" @click="markAsDone">Boshlandi (yakunlangan qilib belgilash)</span>
+                              <span class="tag is-success" v-else>Yakunlandi</span>
 
                               <hr>
                               
@@ -76,9 +76,9 @@
                       </template>
 
                       <template v-else>
-                          <h2>Restricted access</h2>
+                          <h2>Malumotlar cheklangan!</h2>
                           
-                          <p>You need to have an account to continue!</p>
+                          <p>Davom etish uchun akkaunt ochishingiz kerak.</p>
                       </template>
                   </div>
               </div>
@@ -131,7 +131,7 @@ export default {
               this.lessons = response.data.lessons
           })
       
-      document.title = this.course.title + ' | StudyNet'
+      document.title = this.course.title + ' | theMWE.tech'
   },
   methods: {
       submitComment(comment) {

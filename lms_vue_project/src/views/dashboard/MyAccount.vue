@@ -2,14 +2,14 @@
   <div class="about">
     <div class="hero is-info">
       <div class="hero-body has-text-centered">
-        <h1 class="title">My Account</h1>
+        <h1 class="title">Mening hisobim</h1>
       </div>
     </div>
 
     <section class="section">
       <div class="columns is-multiline">
         <div class="column is-12">
-          <h2 class="subtitle is-size-3">Your active courses</h2>
+          <h2 class="subtitle is-size-3">O'rganayotgan kurslaringiz:</h2>
         </div>
 
         <div 
@@ -23,7 +23,7 @@
 
       <hr>
 
-      <button @click="logout()" class="button is-danger">Log out</button>
+      <button @click="logout()" class="button is-danger">Hisobdan chiqish</button>
     </section>
   </div>
 </template>
