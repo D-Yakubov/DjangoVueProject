@@ -29,7 +29,7 @@
         </template>
 
         <template v-if="quizResult == 'incorrect'">
-            <div class="notification is-danger mt-4">Xato ( Iltimos qayta urinib ko'ring!</div>
+            <div class="notification is-danger mt-4">Xato ( Iltimos qayta urinib ko'ring!)</div>
         </template>
     </div>
 </template>

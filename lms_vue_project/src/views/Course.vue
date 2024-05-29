@@ -17,7 +17,7 @@
           <div class="container">
               <div class="columns content">
                   <div class="column is-2">
-                      <h2>Darslar ro'yxati</h2>
+                      <h2>Darslar</h2>
 
                       <ul>
                           <li

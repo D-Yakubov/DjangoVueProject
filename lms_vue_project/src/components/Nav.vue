@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-info" role="navigation" aria-label="main naviation" style="min-height: 5rem;">
+  <nav class="navbar is-info" role="navigation" aria-label="main naviation" style="min-height: 6rem;">
       <div class="navbar-brand">
           <router-link class="navbar-item is-size-4" to="/">TheMWE.tech</router-link>
       </div>

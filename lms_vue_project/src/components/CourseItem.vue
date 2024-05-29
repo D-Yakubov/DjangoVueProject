@@ -16,7 +16,7 @@
             <div class="content">
                 <p>{{ course.short_description }}</p>
 
-                <router-link :to="{name: 'Course', params: {slug: course.slug}}">Ko'proq</router-link>
+                <router-link :to="{name: 'Course', params: {slug: course.slug}}">Ko'rish</router-link>
             </div>
         </div>
     </div>

@@ -65,7 +65,10 @@ class Lesson(models.Model):
         (QUIZ, 'Quiz'),
         (VIDEO, 'Video'),
     )
-
+    
+    def __str__(self):
+        return self.title
+    
     course = models.ForeignKey(Course, related_name='lessons', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -93,3 +96,5 @@ class Quiz(models.Model):
 
     class Meta:
         verbose_name_plural = 'Quizzes'
+    def __str__(self):
+        return self.lesson    
