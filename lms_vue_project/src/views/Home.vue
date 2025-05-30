@@ -42,18 +42,26 @@
           </div>
 
           <div class="column is-12 has-text-centered">
-            <a href="/sign-up" class="button is-info is-size-3 mt-6 mb-6">O'rganishni boshlang!</a>
+            <router-link v-if="isAuthenticated" to="/courses" class="button is-info is-size-3 mt-6 mb-6">Browse Courses</router-link>
+            <router-link v-else to="/sign-up" class="button is-info is-size-3 mt-6 mb-6">O'rganishni boshlang!</router-link>
           </div>
 
           <hr>
 
-          <div 
-              class="column is-3"
-              v-for="course in courses"
-              v-bind:key="course.id"
-          >
-              <CourseItem :course="course" />
-          </div>
+          <template v-if="isAuthenticated && courses.length > 0">
+            <div
+                class="column is-3"
+                v-for="course in courses"
+                v-bind:key="course.id"
+            >
+                <CourseItem :course="course" />
+            </div>
+          </template>
+          <template v-if="!isAuthenticated">
+            <div class="column is-12 has-text-centered">
+                <p class="is-size-5">Please <router-link to="/log-in">log in</router-link> or <router-link to="/sign-up">sign up</router-link> to see our available courses.</p>
+            </div>
+          </template>
         </div>
       </div>
     </section>
@@ -75,18 +83,22 @@ export default {
   components: {
       CourseItem
   },
+  computed: {
+    isAuthenticated() {
+      return this.$store.state.user.isAuthenticated;
+    }
+  },
   mounted() {
-      console.log('mounted')
-
-      document.title = 'Xush kelibsiz | TheMWE.tech'
-
+    document.title = 'Xush kelibsiz | TheMWE.tech';
+    if (this.isAuthenticated) {
       axios
-          .get('courses/get_frontpage_courses/')
-          .then(response => {
-              console.log(response.data)
-
-              this.courses = response.data
-          })
+        .get('courses/get_frontpage_courses/')
+        .then(response => {
+          this.courses = response.data;
+        });
+    } else {
+      this.courses = [];
+    }
   }
 }
 </script>

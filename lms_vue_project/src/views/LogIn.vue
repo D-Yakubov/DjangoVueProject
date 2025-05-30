@@ -63,7 +63,7 @@ export default {
         }
     },
     mounted() {
-        document.title = 'Kirish | theMWE.tech'
+        document.title = 'Kirish | TheMWE.tech';
     },
     methods: {
         submitForm() {

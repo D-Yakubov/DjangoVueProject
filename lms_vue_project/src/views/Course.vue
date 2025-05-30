@@ -30,7 +30,7 @@
                   </div>
 
                   <div class="column is-10">
-                      <template v-if="$store.state.user.isAuthenticated">
+                      <template v-if="isAuthenticated">
                           <template v-if="activeLesson">
                               <h2>{{ activeLesson.title }}</h2>
 
@@ -44,9 +44,24 @@
                               <hr>
 
                               <template v-if="activeLesson.lesson_type === 'quiz'">
-                                  <Quiz
-                                      v-bind:quiz="quiz"
-                                  />
+                                  <div v-if="!quizResults">
+                                      <div v-for="question_item in quizQuestions" :key="question_item.id" class="mb-4">
+                                          <Question :question="question_item" @answer-selected="handleAnswerSelected" />
+                                      </div>
+                                      <button v-if="quizQuestions.length > 0 && Object.keys(userAnswers).length === quizQuestions.length" @click="submitAllAnswers" class="button is-success mt-4">Submit All Answers</button>
+                                      <p v-else-if="quizQuestions.length > 0" class="mt-4 is-size-7">Please answer all questions to submit.</p>
+                                  </div>
+                                  <div v-if="quizResults" class="mt-4">
+                                      <h3 class="is-size-4">Quiz Results</h3>
+                                      <p class="is-size-5">Your score: {{ quizResults.score }} out of {{ quizResults.total_questions }}</p>
+                                      <div v-for="result in quizResults.results" :key="result.question_id" class="mt-3 p-3" :class="result.correct ? 'has-background-success-light' : 'has-background-danger-light'">
+                                          <p><strong>Question ID: {{result.question_id}}</strong></p>
+                                          <p>Your answer: {{ result.selected_answer }}</p>
+                                          <p>Correct answer: {{ result.correct_answer }}</p>
+                                          <p :class="result.correct ? 'has-text-success-dark' : 'has-text-danger-dark'">You were {{ result.correct ? 'Correct' : 'Incorrect' }}</p>
+                                      </div>
+                                      <button @click="resetQuiz" class="button is-info mt-4">Retake Quiz</button>
+                                  </div>
                               </template>
 
                               <template v-if="activeLesson.lesson_type === 'video'">
@@ -92,14 +107,14 @@ import axios from 'axios'
 
 import CourseComment from '@/components/CourseComment'
 import AddComment from '@/components/AddComment'
-import Quiz from '@/components/Quiz'
+import Question from '@/components/Question.vue' // Changed from Quiz to Question
 import Video from '@/components/Video'
 
 export default {
   components: {
       CourseComment,
       AddComment,
-      Quiz,
+      Question, // Changed from Quiz to Question
       Video
   },
   data() {
@@ -113,40 +128,65 @@ export default {
           comments: [],
           activeLesson: null,
           errors: [],
-          quiz: {},
+          quizQuestions: [], // Renamed from quiz to quizQuestions
+          userAnswers: {},   // Added
+          quizResults: null, // Added
           activity: {}
       }
   },
+  computed: {
+    isAuthenticated() {
+      return this.$store.state.user.isAuthenticated;
+    }
+  },
   async mounted() {
-      console.log('mounted')
+    if (!this.isAuthenticated) {
+      this.course = { created_by: { id: 0 } };
+      this.lessons = [];
+      this.activeLesson = null;
+      // Set a generic title or handle it appropriately
+      document.title = 'Course | theMWE.tech';
+      return;
+    }
 
-      const slug = this.$route.params.slug
+    console.log('mounted');
 
-      await axios
-          .get(`courses/${slug}/`)
-          .then(response => {
-              console.log(response.data)
+    const slug = this.$route.params.slug;
 
-              this.course = response.data.course
-              this.lessons = response.data.lessons
-          })
-      
-      document.title = this.course.title + ' | theMWE.tech'
+    await axios
+        .get(`courses/${slug}/`)
+        .then(response => {
+            console.log(response.data);
+            this.course = response.data.course;
+            this.lessons = response.data.lessons;
+            // Set document title here now that course.title is available
+            document.title = this.course.title + ' | theMWE.tech';
+        })
+        .catch(error => {
+            console.error("Error fetching course data:", error);
+            // Handle error, maybe redirect or show error message
+            document.title = 'Error | theMWE.tech';
+        });
   },
   methods: {
       submitComment(comment) {
           this.comments.push(comment)
       },
       setActiveLesson(lesson) {
-          this.activeLesson = lesson
+          this.activeLesson = lesson;
+          this.quizQuestions = []; // Reset quiz questions
+          this.userAnswers = {};   // Reset user answers
+          this.quizResults = null; // Reset quiz results
+          this.comments = [];      // Reset comments
 
           if (lesson.lesson_type === 'quiz') {
-              this.getQuiz()
-          } else {
-              this.getComments()
+              this.getQuizQuestions();
+          } else if (lesson.lesson_type === 'article') { // Assuming comments are for articles
+              this.getComments();
           }
+          // For video lessons, no specific data fetching here beyond the lesson content itself
 
-          this.trackStarted()
+          this.trackStarted();
       },
       trackStarted() {
           axios
@@ -166,14 +206,53 @@ export default {
                   this.activity = response.data
               })
       },
-      getQuiz() {
+      getQuizQuestions() { // Renamed from getQuiz
+          if (!this.isAuthenticated || !this.activeLesson) return;
           axios
-              .get(`courses/${this.course.slug}/${this.activeLesson.slug}/get-quiz/`)
+              .get(`courses/${this.course.slug}/${this.activeLesson.slug}/get-quiz-questions/`) // Updated endpoint
               .then(response => {
-                  console.log(response.data)
-
-                  this.quiz = response.data
+                  console.log("Quiz questions:", response.data);
+                  this.quizQuestions = response.data;
               })
+              .catch(error => {
+                  console.error("Error fetching quiz questions:", error);
+                  this.quizQuestions = []; // Ensure it's an array on error
+              });
+      },
+      handleAnswerSelected(payload) {
+          this.userAnswers = {
+              ...this.userAnswers,
+              [payload.questionId]: payload.selectedAnswer
+          };
+          console.log("User answers:", this.userAnswers);
+      },
+      submitAllAnswers() {
+          if (!this.isAuthenticated || !this.activeLesson) return;
+
+          const payload = this.quizQuestions.map(q => ({
+              question_id: q.id,
+              selected_answer: this.userAnswers[q.id] || '' // Ensure an answer is provided, even if empty
+          }));
+
+          axios
+              .post(`courses/${this.course.slug}/${this.activeLesson.slug}/submit-quiz-answers/`, payload)
+              .then(response => {
+                  console.log("Quiz submission response:", response.data);
+                  this.quizResults = response.data;
+                  // Optionally, clear answers or questions if not retaking immediately
+                  // this.userAnswers = {};
+                  // this.quizQuestions = [];
+              })
+              .catch(error => {
+                  console.error("Error submitting quiz answers:", error);
+                  // Potentially show an error message to the user
+              });
+      },
+      resetQuiz() {
+          this.quizQuestions = []; // Will be refetched by getQuizQuestions if needed or could re-use existing
+          this.userAnswers = {};
+          this.quizResults = null;
+          this.getQuizQuestions(); // Refetch questions for a fresh attempt
       },
       getComments() {
           axios

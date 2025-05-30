@@ -45,20 +45,30 @@ export default {
         CourseItem
     },
     async mounted() {
-        console.log('mounted')
+        console.log('mounted');
+        document.title = 'Muallif | TheMWE.tech'; // Initial title
 
-        this.getCourses()
+        this.getCourses();
     },
     methods: {
         getCourses() {
             axios
                 .get(`courses/get_author_courses/${this.$route.params.id}/`)
                 .then(response => {
-                    console.log(response.data)
+                    console.log(response.data);
 
-                    this.courses = response.data.courses
-                    this.created_by = response.data.created_by
+                    this.courses = response.data.courses;
+                    this.created_by = response.data.created_by;
+
+                    // Update title after fetching author data
+                    if (this.created_by.first_name || this.created_by.last_name) {
+                        document.title = `${this.created_by.first_name || ''} ${this.created_by.last_name || ''} | TheMWE.tech`.trim();
+                    }
                 })
+                .catch(error => {
+                    console.error("Error fetching author courses:", error);
+                    // Optionally handle error by setting a generic error title or keeping the initial one
+                });
         }
     }
 }

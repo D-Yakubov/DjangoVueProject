@@ -24,7 +24,7 @@
 <script>
 export default {
   mounted() {
-    document.title = "Biz haqimizda";
+    document.title = 'Biz haqimizda | TheMWE.tech';
   },
 };
 </script>

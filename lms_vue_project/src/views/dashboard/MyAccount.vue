@@ -43,6 +43,7 @@ export default {
       CourseItem
     },
     mounted() {
+        document.title = 'Mening akkauntim | TheMWE.tech';
         axios
             .get('activities/get_active_courses/')
             .then(response => {

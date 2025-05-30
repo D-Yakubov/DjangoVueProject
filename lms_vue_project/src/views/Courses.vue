@@ -6,10 +6,11 @@
           </div>
       </div>
 
-      <section class="section">
-          <div class="container">
-              <div class="columns">
-                  <div class="column is-2">
+      <template v-if="isAuthenticated">
+          <section class="section">
+              <div class="container">
+                  <div class="columns">
+                      <div class="column is-2">
                       <aside class="menu">
                           <p class="menu-label">Kategoriya</p>
 
@@ -54,6 +55,15 @@
               </div>
           </div>
       </section>
+      </template>
+      <template v-else>
+          <section class="section">
+              <div class="container has-text-centered">
+                  <p class="is-size-4">You need to be logged in to view courses.</p>
+                  <p>Please <router-link to="/log-in">Log In</router-link> or <router-link to="/sign-up">Sign Up</router-link>.</p>
+              </div>
+          </section>
+      </template>
   </div>
 </template>
 
@@ -73,30 +83,42 @@ export default {
   components: {
       CourseItem
   },
+  computed: {
+    isAuthenticated() {
+      return this.$store.state.user.isAuthenticated;
+    }
+  },
   async mounted() {
-      console.log('mounted')
+    document.title = 'Kurslar | theMWE.tech';
 
-      document.title = 'Kurslar | theMWE.tech'
+    if (!this.isAuthenticated) {
+      this.courses = [];
+      this.categories = [];
+      return;
+    }
 
-      await axios
-          .get('courses/get_categories/')
-          .then(response => {
-              console.log(response.data)
+    console.log('mounted');
 
-              this.categories = response.data
-          })
-      
-      this.getCourses()
+    await axios
+        .get('courses/get_categories/')
+        .then(response => {
+            console.log(response.data);
+            this.categories = response.data;
+        });
+
+    this.getCourses();
   },
   methods: {
       setActiveCategory(category) {
-          console.log(category)
-          this.activeCategory = category
+          console.log(category);
+          this.activeCategory = category;
 
-          this.getCourses()
+          this.getCourses();
       },
       getCourses() {
-          let url = 'courses/'
+          if (!this.isAuthenticated) return;
+
+          let url = 'courses/';
 
           if (this.activeCategory) {
               url += '?category_id=' + this.activeCategory.id
