@@ -1,0 +1,27 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+lms_project/staticfiles/
+
+# Node / Vue
+node_modules/
+lms_vue_project/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment & IDE
+.env
+.env.local
+.env.*.local
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

@@ -1,8 +1,8 @@
-from operator import mod
 from django.contrib.auth.models import User
 from django.db import models
 
 from course.models import Course, Lesson
+
 
 class Activity(models.Model):
     STARTED = 'started'
@@ -10,7 +10,7 @@ class Activity(models.Model):
 
     STATUS_CHOICES = (
         (STARTED, 'Started'),
-        (DONE, 'Done')
+        (DONE, 'Done'),
     )
 
     course = models.ForeignKey(Course, related_name='activities', on_delete=models.CASCADE)
@@ -18,5 +18,9 @@ class Activity(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=STARTED)
     created_by = models.ForeignKey(User, related_name='activities', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'Activities'
+
     def __str__(self):
-        return self.course
+        return f"{self.course.title} - {self.lesson.title} ({self.status})"

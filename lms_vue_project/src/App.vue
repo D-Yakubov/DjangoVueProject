@@ -1,39 +1,38 @@
 <template>
-  <div>
-    <Nav/>
-  
-    <router-view/>
-  
-    <Footer/>
+  <div class="app-layout">
+    <AppNavbar />
+
+    <main class="main-content">
+      <router-view />
+    </main>
+
+    <AppFooter />
   </div>
-  </template>
-  
-  <script>
-  import axios from 'axios'
-  
-  import Footer from '@/components/Footer'
-  import Nav from '@/components/Nav'
-  
-  export default {
-    name: 'App',
-    components: {
-      Nav,
-      Footer
-    },
-    beforeCreate() {
-      this.$store.commit('initializeStore')
-  
-      const token = this.$store.state.user.token
-  
-      if (token) {
-        axios.defaults.headers.common['Authorization'] = "Token " + token
-      } else {
-        axios.defaults.headers.common['Authorization'] = ""
-      }
-    }
+</template>
+
+<script>
+import AppFooter from '@/components/AppFooter.vue'
+import AppNavbar from '@/components/AppNavbar.vue'
+
+export default {
+  name: 'App',
+  components: {
+    AppNavbar,
+    AppFooter
   }
-  </script>
-  
-  <style lang="scss">
-  @import '../node_modules/bulma';
-  </style>
+}
+</script>
+
+<style lang="scss">
+@import '../node_modules/bulma';
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+</style>

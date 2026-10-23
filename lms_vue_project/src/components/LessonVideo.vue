@@ -1,0 +1,19 @@
+<template>
+  <div class="video-container">
+    <iframe
+      :src="'https://www.youtube.com/embed/' + youtube_id"
+      width="100%"
+      height="600"
+      frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;"
+      allowfullscreen
+    ></iframe>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'LessonVideo',
+  props: ['youtube_id']
+}
+</script>

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
+
 class Category(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -10,9 +11,11 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = 'Categories'
+        ordering = ('title',)
 
     def __str__(self):
         return self.title
+
 
 class Course(models.Model):
     DRAFT = 'draft'
@@ -22,10 +25,10 @@ class Course(models.Model):
     STATUS_CHOICES = (
         (DRAFT, 'Draft'),
         (IN_REVIEW, 'In review'),
-        (PUBLISHED, 'Published')
+        (PUBLISHED, 'Published'),
     )
 
-    categories = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category, related_name='courses', blank=True)
     title = models.CharField(max_length=255)
     slug = models.SlugField()
     short_description = models.TextField(blank=True, null=True)
@@ -43,9 +46,9 @@ class Course(models.Model):
 
     def get_image(self):
         if self.image:
-            return settings.WEBSITE_URL + self.image.url
-        else:
-            return 'http://bulma.io/assets/images/placeholders/1280x960.png'
+            return f"{settings.WEBSITE_URL.rstrip('/')}{self.image.url}"
+        return 'https://bulma.io/assets/images/placeholders/1280x960.png'
+
 
 class Lesson(models.Model):
     DRAFT = 'draft'
@@ -53,7 +56,7 @@ class Lesson(models.Model):
 
     CHOICES_STATUS = (
         (DRAFT, 'Draft'),
-        (PUBLISHED, 'Published')
+        (PUBLISHED, 'Published'),
     )
 
     ARTICLE = 'article'
@@ -65,10 +68,7 @@ class Lesson(models.Model):
         (QUIZ, 'Quiz'),
         (VIDEO, 'Video'),
     )
-    
-    def __str__(self):
-        return self.title
-    
+
     course = models.ForeignKey(Course, related_name='lessons', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -78,6 +78,10 @@ class Lesson(models.Model):
     lesson_type = models.CharField(max_length=20, choices=CHOICES_LESSON_TYPE, default=ARTICLE)
     youtube_id = models.CharField(max_length=20, blank=True, null=True)
 
+    def __str__(self):
+        return self.title
+
+
 class Comment(models.Model):
     course = models.ForeignKey(Course, related_name='comments', on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson, related_name='comments', on_delete=models.CASCADE)
@@ -86,15 +90,23 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ('created_at',)
+
+    def __str__(self):
+        return f"{self.name} on {self.lesson.title}"
+
+
 class Quiz(models.Model):
     lesson = models.ForeignKey(Lesson, related_name='quizzes', on_delete=models.CASCADE)
     question = models.CharField(max_length=200, null=True)
-    answer = models.CharField(max_length=200,null=True)
-    op1 = models.CharField(max_length=200,null=True)
-    op2 = models.CharField(max_length=200,null=True)
-    op3 = models.CharField(max_length=200,null=True)
+    answer = models.CharField(max_length=200, null=True)
+    op1 = models.CharField(max_length=200, null=True)
+    op2 = models.CharField(max_length=200, null=True)
+    op3 = models.CharField(max_length=200, null=True)
 
     class Meta:
         verbose_name_plural = 'Quizzes'
+
     def __str__(self):
-        return self.lesson    
+        return self.question or f"Quiz for {self.lesson.title}"
